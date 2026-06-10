@@ -14,7 +14,7 @@ service:
 
 env:
   - name: SERVER_HOST
-    value: "server"
+    value: "baykar-case-dev-server.server-dev.svc.cluster.local"
   - name: SERVER_PORT
     value: "5050"
 
