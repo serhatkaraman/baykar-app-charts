@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: swr.tr-west-1.myhuaweicloud.com/baykar-case-swr/client
-  tag: master-541ba2
+  tag: master-11cc32
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
