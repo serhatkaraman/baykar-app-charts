@@ -1,0 +1,67 @@
+replicaCount: 1
+
+image:
+  repository: swr.tr-west-1.myhuaweicloud.com/baykar-case-swr/server
+  tag: ""
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: swr-secret
+
+service:
+  type: ClusterIP
+  port: 5050
+
+secret:
+  enabled: true
+  data:
+    atlas-uri: <path:secret/data/baykar-case/server#atlas-uri>
+
+env:
+  - name: ATLAS_URI
+    valueFrom:
+      secretKeyRef:
+        name: baykar-case-dev-server
+        key: atlas-uri
+        # secret adı = release adı (baykar-case-dev-server)
+
+envFrom: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+livenessProbe:
+  enabled: true
+  path: /healthcheck
+  port: 5050
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  path: /healthcheck
+  port: 5050
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+podLabels: {}

@@ -1,0 +1,35 @@
+replicaCount: 1
+
+image:
+  repository: swr.tr-west-1.myhuaweicloud.com/baykar-case-swr/etl
+  tag: ""
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+env: []
+
+envFrom: []
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+podLabels: {}

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: client
+description: MERN Stack - React Frontend Client
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

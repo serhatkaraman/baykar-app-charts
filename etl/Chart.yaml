@@ -1,0 +1,6 @@
+apiVersion: v2
+name: etl
+description: Python ETL Job - Runs every hour
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

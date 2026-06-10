@@ -1,0 +1,71 @@
+replicaCount: 1
+
+image:
+  repository: swr.tr-west-1.myhuaweicloud.com/baykar-case-swr/client
+  tag: ""
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: swr-secret
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  - name: SERVER_HOST
+    value: "server"
+  - name: SERVER_PORT
+    value: "5050"
+
+envFrom: []
+
+ingress:
+  enabled: true
+  ingressClassName: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  host: "client.myturkishdish.com"
+  tls:
+    enabled: true
+    secretName: "client-tls"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+livenessProbe:
+  enabled: true
+  path: /
+  port: 80
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  path: /
+  port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  failureThreshold: 3
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+podAnnotations: {}
+podLabels: {}
